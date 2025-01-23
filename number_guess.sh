@@ -38,6 +38,7 @@ MAIN(){
         then
           echo "You guessed it in $ATTEMPTS tries. The secret number was $RANDOM_NUMBER. Nice job!"
           # add to the db
+          ADD_GAME=$($PSQL "INSERT INTO games(user_id, attempts) VALUES($FIND_USER_ID, $ATTEMPTS)")
           exit
         else
           if [[ $GUESS -lt $RANDOM_NUMBER ]]
