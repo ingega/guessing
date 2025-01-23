@@ -10,10 +10,15 @@ MAIN(){
   if [[ -z $FIND_USER_ID ]]
   then
    echo "Welcome, $USER_NAME! It looks like this is your first time here."
+  else # user exists
+    # get games played
+    GAMES_PLAYED=$($PSQL "SELECT COUNT(game_id) as games_played FROM games WHERE user_id=$FIND_USER_ID")
+    # get best game
+    BEST_GAME=$($PSQL "SELECT MIN(attempts) as low_attempts FROM games WHERE user_id=$FIND_USER_ID")
+    echo "Welcome back, $USER_NAME! You have played $GAMES_PLAYED games, and your best game took $BEST_GAME guesses."
   fi
   # Generate a random number between 1 and 1000
   RANDOM_NUMBER=$(( 1 + $RANDOM % 1000 ))
-  echo $RANDOM_NUMBER
   # if NaN then re-promt
   SECOND_FLAG=true
   ATTEMPTS=1 # there's at least one shoot
@@ -32,6 +37,7 @@ MAIN(){
         if [[ $GUESS -eq $RANDOM_NUMBER ]]
         then
           echo "You guessed it in $ATTEMPTS tries. The secret number was $RANDOM_NUMBER. Nice job!"
+          # add to the db
           exit
         else
           if [[ $GUESS -lt $RANDOM_NUMBER ]]
