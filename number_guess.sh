@@ -5,6 +5,12 @@ PSQL="psql --username=freecodecamp --dbname=number_guess -t --no-align -c"
 MAIN(){
   echo "Enter your username:"
   read USER_NAME
+  # let's check if exists
+  FIND_USER_ID=$($PSQL "SELECT user_id FROM users WHERE username='$USER_NAME' ")
+  if [[ -z $FIND_USER ]]
+  then
+   echo "Welcome, $USER_NAME! It looks like this is your first time here."
+  fi
   # Generate a random number between 1 and 1000
   RANDOM_NUMBER=$(( 1 + $RANDOM % 1000 ))
   # need a while to save the attempts, also a flag to control the loop
@@ -31,7 +37,7 @@ MAIN(){
     if [[ $GUESS -eq $RANDOM_NUMBER ]]
     then
       echo "You guessed it in $ATTEMPTS tries. The secret number was $RANDOM_NUMBER. Nice job!"
-      EXIT
+      exit -1
     else
       if [[ $GUESS -lt $RANDOM_NUMBER ]]
       then
@@ -42,10 +48,6 @@ MAIN(){
       ATTEMPTS=$((ATTEMPTS + 1))
     fi
   done
-}
-
-EXIT(){
-  echo "thanks for play 'guess the number'"        
 }
 
 MAIN

@@ -83,7 +83,8 @@ ALTER SEQUENCE public.games_game_id_seq OWNED BY public.games.game_id;
 --
 
 CREATE TABLE public.users (
-    user_id integer NOT NULL
+    user_id integer NOT NULL,
+    username character varying(22) NOT NULL
 );
 
 
@@ -165,6 +166,14 @@ ALTER TABLE ONLY public.games
 
 ALTER TABLE ONLY public.users
     ADD CONSTRAINT users_pkey PRIMARY KEY (user_id);
+
+
+--
+-- Name: users users_username_key; Type: CONSTRAINT; Schema: public; Owner: freecodecamp
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_username_key UNIQUE (username);
 
 
 --
