@@ -5,9 +5,15 @@ PSQL="psql --username=freecodecamp --dbname=number_guess -t --no-align -c"
 MAIN(){
   echo "Enter your username:"
   read USER_NAME
+  # the very first thing, is check that the user name is below 22 chrs
+  if [[ ${#USER_NAME} -gt 22 ]]
+  then
+    echo "Username cannot be longer than 22 characters."
+    exit 1
+  fi
   # let's check if exists
   FIND_USER_ID=$($PSQL "SELECT user_id FROM users WHERE username='$USER_NAME' ")
-  if [[ -z $FIND_USER ]]
+  if [[ -z $FIND_USER_ID ]]
   then
    echo "Welcome, $USER_NAME! It looks like this is your first time here."
   fi
