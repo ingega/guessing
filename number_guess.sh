@@ -19,7 +19,7 @@ MAIN(){
     SECOND_FLAG=true
     while $SECOND_FLAG
     do
-      if [[ $GUESS =~ ^[0-9]+$ ]]
+      if ! [[ $GUESS =~ ^[0-9]+$ ]]
       then
         echo "That is not an integer, guess again:"
         read GUESS
@@ -28,20 +28,24 @@ MAIN(){
       fi
     done
     # the number is an integer, so let's see if is above, behind or in the value
-    if [[ $GUESS=$RANDOM_NUMBER ]]
+    if [[ $GUESS -eq $RANDOM_NUMBER ]]
     then
       echo "You guessed it in $ATTEMPTS tries. The secret number was $RANDOM_NUMBER. Nice job!"
-      FLAG=false
+      EXIT
     else
-      if [[ $GUESS<RANDOM_NUMBER ]]
+      if [[ $GUESS -lt $RANDOM_NUMBER ]]
       then
         echo "It's higher than that, guess again:"
       else
-        echo "It's higher than that, guess again:"
+        echo "It's lower than that, guess again:"
       fi
-      ATTEMPTS=ATTEMPTS+1
+      ATTEMPTS=$((ATTEMPTS + 1))
     fi
   done
+}
+
+EXIT(){
+  echo "thanks for play 'guess the number'"        
 }
 
 MAIN
