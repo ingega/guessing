@@ -9,7 +9,11 @@ MAIN(){
   FIND_USER_ID=$($PSQL "SELECT user_id FROM users WHERE username='$USER_NAME' ")
   if [[ -z $FIND_USER_ID ]]
   then
-   echo "Welcome, $USER_NAME! It looks like this is your first time here."
+    # add username
+    INSERT_USER=$($PSQL "INSERTO INTO users(username) VALUES('$USER_NAME')")
+    echo "Welcome, $USER_NAME! It looks like this is your first time here."
+    # recover the new_user_id
+    FIND_USER_ID=$($PSQL "SELECT user_id FROM users WHERE username='$USER_NAME' ")
   else # user exists
     # get games played
     GAMES_PLAYED=$($PSQL "SELECT COUNT(game_id) as games_played FROM games WHERE user_id=$FIND_USER_ID")
@@ -39,7 +43,7 @@ MAIN(){
           echo "You guessed it in $ATTEMPTS tries. The secret number was $RANDOM_NUMBER. Nice job!"
           # add to the db
           ADD_GAME=$($PSQL "INSERT INTO games(user_id, attempts) VALUES($FIND_USER_ID, $ATTEMPTS)")
-          exit
+          break
         else
           if [[ $GUESS -lt $RANDOM_NUMBER ]]
           then
