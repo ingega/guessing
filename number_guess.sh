@@ -16,7 +16,7 @@ MAIN(){
     FIND_USER_ID=$($PSQL "SELECT user_id FROM users WHERE username='$USER_NAME';")
   else # user exists
     # the name must be recovered from the database
-    FIND_USER_NAME=$($PSQL "SELECT username FROM users WHEERE username = '$USER_NAME';")
+    FIND_USER_NAME=$($PSQL "SELECT username FROM users WHERE username = '$USER_NAME';")
     # get games played
     GAMES_PLAYED=$($PSQL "SELECT COUNT(game_id) as games_played FROM games WHERE user_id=$FIND_USER_ID;")
     # get best game
