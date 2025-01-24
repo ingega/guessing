@@ -13,12 +13,14 @@ MAIN(){
     INSERT_USER=$($PSQL "INSERTO INTO users(username) VALUES('$USER_NAME')")
     echo "Welcome, $USER_NAME! It looks like this is your first time here."
     # recover the new_user_id
-    #FIND_USER_ID=$($PSQL "SELECT user_id FROM users WHERE username='$USER_NAME' ")
+    FIND_USER_ID=$($PSQL "SELECT user_id FROM users WHERE username='$USER_NAME';")
   else # user exists
+    # the name must be recovered from the database
+    FIND_USER_NAME=$($PSQL "SELECT username FROM users WHEERE username = '$USER_NAME';")
     # get games played
-    GAMES_PLAYED=$($PSQL "SELECT COUNT(game_id) as games_played FROM games WHERE user_id=$FIND_USER_ID")
+    GAMES_PLAYED=$($PSQL "SELECT COUNT(game_id) as games_played FROM games WHERE user_id=$FIND_USER_ID;")
     # get best game
-    BEST_GAME=$($PSQL "SELECT MIN(attempts) as low_attempts FROM games WHERE user_id=$FIND_USER_ID")
+    BEST_GAME=$($PSQL "SELECT MIN(attempts) as low_attempts FROM games WHERE user_id=$FIND_USER_ID;")
     echo "Welcome back, $USER_NAME! You have played $GAMES_PLAYED games, and your best game took $BEST_GAME guesses."
   fi
   # Generate a random number between 1 and 1000
