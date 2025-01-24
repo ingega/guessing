@@ -21,5 +21,7 @@ MAIN(){
     BEST_GAME=$($PSQL "SELECT MIN(attempts) as low_attempts FROM games WHERE user_id=$FIND_USER_ID")
     echo "Welcome back, $USER_NAME! You have played $GAMES_PLAYED games, and your best game took $BEST_GAME guesses."
   fi
+  # Generate a random number between 1 and 1000
+  RANDOM_NUMBER=$(( 1 + $RANDOM % 1000 ))
 }
 MAIN
