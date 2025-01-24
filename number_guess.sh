@@ -10,7 +10,7 @@ MAIN(){
   if [[ -z $FIND_USER_ID ]]
   then
     # add username
-    INSERT_USER=$($PSQL "INSERTO INTO users(username) VALUES('$USER_NAME')")
+    INSERT_USER=$($PSQL "INSERT INTO users(username) VALUES('$USER_NAME')")
     echo "Welcome, $USER_NAME! It looks like this is your first time here."
     # recover the new_user_id
     FIND_USER_ID=$($PSQL "SELECT user_id FROM users WHERE username='$USER_NAME';")
