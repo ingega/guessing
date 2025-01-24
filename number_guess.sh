@@ -13,7 +13,7 @@ MAIN(){
     INSERT_USER=$($PSQL "INSERTO INTO users(username) VALUES('$USER_NAME')")
     echo "Welcome, $USER_NAME! It looks like this is your first time here."
     # recover the new_user_id
-    FIND_USER_ID=$($PSQL "SELECT user_id FROM users WHERE username='$USER_NAME' ")
+    #FIND_USER_ID=$($PSQL "SELECT user_id FROM users WHERE username='$USER_NAME' ")
   else # user exists
     # get games played
     GAMES_PLAYED=$($PSQL "SELECT COUNT(game_id) as games_played FROM games WHERE user_id=$FIND_USER_ID")
